@@ -1,9 +1,14 @@
+// Project headers
 #include "shader.h"
 #include "file.h"
+
+// Standard library headers
 #include <assert.h>
-#include <glad/glad.h>
 #include <stddef.h>
 #include <stdlib.h>
+
+// Third party headers
+#include <glad/glad.h>
 
 static unsigned int compileShader(const char *path, unsigned int type)
 {
@@ -13,6 +18,7 @@ static unsigned int compileShader(const char *path, unsigned int type)
     glShaderSource(shader, 1, &source, NULL);
 
     glCompileShader(shader);
+
     int status;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
     assert(status);
@@ -23,9 +29,12 @@ static unsigned int compileShader(const char *path, unsigned int type)
 static unsigned int linkProgram(unsigned int vertexShader, unsigned int fragmentShader)
 {
     unsigned int program = glCreateProgram();
+
     glAttachShader(program, vertexShader);
     glAttachShader(program, fragmentShader);
+
     glLinkProgram(program);
+
     int status;
     glGetProgramiv(program, GL_LINK_STATUS, &status);
     assert(status);
@@ -37,6 +46,7 @@ Shader *constructShader(const char *vertexShaderPath, const char *fragmentShader
 {
     unsigned int vertexShader = compileShader(vertexShaderPath, GL_VERTEX_SHADER);
     unsigned int fragmentShader = compileShader(fragmentShaderPath, GL_FRAGMENT_SHADER);
+
     unsigned int program = linkProgram(vertexShader, fragmentShader);
 
     Shader *shader = (Shader *)malloc(sizeof(Shader));

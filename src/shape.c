@@ -1,6 +1,11 @@
+// Project Headers
 #include "shape.h"
-#include <glad/glad.h>
+
+// Standard library headers
 #include <stdlib.h>
+
+// Third party headers
+#include <glad/glad.h>
 
 Shape *constructCube()
 {
@@ -32,11 +37,9 @@ Shape *constructCube()
         indexData[6 * i + 5] = 4 * i + 3;
     }
 
-    unsigned int vertexArrayObject;
+    unsigned int vertexArrayObject, vertexBufferObject, elementBufferObject;
     glGenVertexArrays(1, &vertexArrayObject);
-    unsigned int vertexBufferObject;
     glGenBuffers(1, &vertexBufferObject);
-    unsigned int elementBufferObject;
     glGenBuffers(1, &elementBufferObject);
 
     glBindVertexArray(vertexArrayObject);
@@ -56,6 +59,13 @@ Shape *constructCube()
 
     Shape *cube = (Shape *)malloc(sizeof(Shape));
     cube->vertexArrayObject = vertexArrayObject;
+    cube->vertexCount = 36;
 
     return cube;
+}
+
+void drawShape(Shape *shape)
+{
+    glBindVertexArray(shape->vertexArrayObject);
+    glDrawElements(GL_TRIANGLES, shape->vertexCount, GL_UNSIGNED_INT, 0);
 }
