@@ -1,6 +1,8 @@
 // Project headers
 #include "shader.h"
 #include "file.h"
+#include "matrix.h"
+#include "vector.h"
 
 // Standard library headers
 #include <assert.h>
@@ -58,4 +60,14 @@ Shader *constructShader(const char *vertexShaderPath, const char *fragmentShader
 void useShader(Shader *shader)
 {
     glUseProgram(shader->program);
+}
+
+void setVectorUniform(Shader *shader, const char *name, Vector *vector)
+{
+    glUniform3fv(glGetUniformLocation(shader->program, name), 1, vector->component);
+}
+
+void setMatrixUniform(Shader *shader, const char *name, Matrix *matrix)
+{
+    glUniformMatrix4fv(glGetUniformLocation(shader->program, name), 1, GL_FALSE, matrix->entry);
 }

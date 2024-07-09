@@ -1,6 +1,8 @@
 // Project headers
+#include "matrix.h"
 #include "shader.h"
 #include "shape.h"
+#include "vector.h"
 #include "window.h"
 
 // Standard library headers
@@ -24,6 +26,12 @@ int main()
     useShader(shader);
 
     Shape *cube = constructCube();
+
+    setMatrixUniform(shader, "scaling", constructScalingMatrix(constructVector(0.5f, 0.5f, 0.5f)));
+    setMatrixUniform(shader, "rotation", constructRotationMatrix(constructVector(0.0f, 0.0f, 0.78f)));
+    setMatrixUniform(shader, "translation", constructTranslationMatrix(constructVector(0.25f, -0.25f, 0.0f)));
+    setMatrixUniform(shader, "camera", constructIdentityMatrix());
+    setMatrixUniform(shader, "projection", constructIdentityMatrix());
 
     while (isWindowOpen(window))
     {
