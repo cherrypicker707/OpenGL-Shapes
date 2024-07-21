@@ -68,6 +68,23 @@ Matrix *constructTranslationMatrix(Vector *translation)
     return matrix;
 }
 
+Matrix *constructPerspectiveMatrix(float aspect, float fieldOfView, float near, float far)
+{
+    fieldOfView /= 180.0f;
+    fieldOfView *= 3.14159f;
+
+    Matrix *matrix = constructIdentityMatrix();
+
+    matrix->entry[e(0, 0)] = aspect / tan(fieldOfView / 2.0f);
+    matrix->entry[e(1, 1)] = 1.0f / tan(fieldOfView / 2.0f);
+    matrix->entry[e(2, 2)] = -2.0f / (near - far);
+    matrix->entry[e(2, 3)] = (near + far) / (near - far);
+    matrix->entry[e(3, 2)] = 1.0f;
+    matrix->entry[e(3, 3)] = 0.0f;
+
+    return matrix;
+}
+
 Matrix *matrixProduct(Matrix *left, Matrix *right)
 {
     Matrix *matrix = constructMatrix();

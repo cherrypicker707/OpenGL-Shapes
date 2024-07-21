@@ -1,8 +1,6 @@
 // Project headers
 #include "shader.h"
 #include "file.h"
-#include "matrix.h"
-#include "vector.h"
 
 // Standard library headers
 #include <assert.h>
