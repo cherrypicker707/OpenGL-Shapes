@@ -11,7 +11,8 @@ Camera *constructCamera(Shader *shader)
 {
     Camera *camera = (Camera *)malloc(sizeof(Camera));
 
-    camera->transformation = constructIdentityMatrix();
+    camera->rotation = constructIdentityMatrix();
+    camera->translation = constructIdentityMatrix();
     camera->shader = shader;
 
     updateCamera(camera);
@@ -21,7 +22,8 @@ Camera *constructCamera(Shader *shader)
 
 void updateCamera(Camera *camera)
 {
-    setMatrixUniform(camera->shader, "camera", camera->transformation);
+    setMatrixUniform(camera->shader, "cameraRotation", camera->rotation);
+    setMatrixUniform(camera->shader, "cameraTranslation", camera->translation);
 }
 
 void rotateCamera(Camera *camera, Vector *rotation)
@@ -29,7 +31,7 @@ void rotateCamera(Camera *camera, Vector *rotation)
     scaleVector(rotation, -1.0f);
     Matrix *matrix = constructRotationMatrix(rotation);
 
-    camera->transformation = matrixProduct(matrix, camera->transformation);
+    camera->rotation = matrixProduct(matrix, camera->rotation);
 
     updateCamera(camera);
 }
@@ -39,7 +41,7 @@ void translateCamera(Camera *camera, Vector *translation)
     scaleVector(translation, -1.0f);
     Matrix *matrix = constructTranslationMatrix(translation);
 
-    camera->transformation = matrixProduct(matrix, camera->transformation);
+    camera->translation = matrixProduct(matrix, camera->translation);
 
     updateCamera(camera);
 }

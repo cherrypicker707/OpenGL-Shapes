@@ -27,6 +27,7 @@ Window *constructWindow(const char *title, unsigned int width, unsigned int heig
 
     gladLoadGLLoader(SDL_GL_GetProcAddress);
     glViewport(0, 0, width, height);
+    glEnable(GL_DEPTH_TEST);
 
     Window *window = (Window *)malloc(sizeof(Window));
     window->pointer = pointer;

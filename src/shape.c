@@ -2,6 +2,7 @@
 #include "shape.h"
 
 // Standard library headers
+// #include <stdio.h>
 #include <stdlib.h>
 
 // Third party headers
@@ -24,6 +25,9 @@ Shape *constructCube()
         vertexData[6 * i + 4] = 0;
         vertexData[6 * i + 5] = 0;
         vertexData[6 * i + 3 + f] = 2 * d - 1;
+
+        // printf("%f %f %f -> %f %f %f\n", vertexData[6 * i + 0], vertexData[6 * i + 1], vertexData[6 * i + 2],
+        //        vertexData[6 * i + 3], vertexData[6 * i + 4], vertexData[6 * i + 5]);
     }
 
     unsigned int indexData[36];
@@ -52,7 +56,7 @@ Shape *constructCube()
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)3);
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void *)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
     glBindVertexArray(0);

@@ -3,8 +3,8 @@
 #include "file.h"
 
 // Standard library headers
-#include <assert.h>
 #include <stddef.h>
+#include <stdio.h>
 #include <stdlib.h>
 
 // Third party headers
@@ -21,7 +21,12 @@ static unsigned int compileShader(const char *path, unsigned int type)
 
     int status;
     glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
-    assert(status);
+    if (!status)
+    {
+        char log[512];
+        glGetShaderInfoLog(shader, 512, NULL, log);
+        printf("%s\n", log);
+    }
 
     return shader;
 }
@@ -37,7 +42,12 @@ static unsigned int linkProgram(unsigned int vertexShader, unsigned int fragment
 
     int status;
     glGetProgramiv(program, GL_LINK_STATUS, &status);
-    assert(status);
+    if (!status)
+    {
+        char log[512];
+        glGetProgramInfoLog(program, 512, NULL, log);
+        printf("%s\n", log);
+    }
 
     return program;
 }

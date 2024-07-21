@@ -6,7 +6,8 @@
 #include "shader.h"
 
 typedef struct {
-  Matrix *transformation;
+  Matrix *rotation;
+  Matrix *translation;
   Shader *shader;
 } Camera;
 
