@@ -1,4 +1,5 @@
 // Project headers
+#include "camera.h"
 #include "matrix.h"
 #include "shader.h"
 #include "shape.h"
@@ -25,12 +26,15 @@ int main()
 
     useShader(shader);
 
+    Camera *camera = constructCamera(shader);
+
+    translateCamera(camera, constructVector(1.0f, 1.0f, -2.0f));
+
     Shape *cube = constructCube();
 
     setMatrixUniform(shader, "scaling", constructScalingMatrix(constructVector(0.5f, 0.5f, 0.5f)));
     setMatrixUniform(shader, "rotation", constructRotationMatrix(constructVector(0.0f, 0.0f, 0.0f)));
     setMatrixUniform(shader, "translation", constructTranslationMatrix(constructVector(0.0f, 0.0f, 5.0f)));
-    setMatrixUniform(shader, "camera", constructIdentityMatrix());
     setMatrixUniform(shader, "projection",
                      constructPerspectiveMatrix((float)WINDOW_HEIGHT / (float)WINDOW_WIDTH, 120.0f, 0.01f, 10.0f));
 
