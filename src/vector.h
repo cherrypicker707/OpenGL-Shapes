@@ -6,5 +6,6 @@ typedef struct {
 } Vector;
 
 Vector *constructVector(float x, float y, float z);
+void scaleVector(Vector *vector, float scalar);
 
 #endif

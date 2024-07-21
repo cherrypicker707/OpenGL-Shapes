@@ -15,3 +15,9 @@ Vector *constructVector(float x, float y, float z)
 
     return vector;
 }
+
+void scaleVector(Vector *vector, float scalar)
+{
+    for (int i = 0; i < 3; i++)
+        vector->component[i] *= scalar;
+}

@@ -2,6 +2,7 @@
 #include "window.h"
 
 // Standard library headers
+#include <SDL2/SDL_keyboard.h>
 #include <assert.h>
 #include <stdlib.h>
 
@@ -46,6 +47,8 @@ void handleEvents(Window *window)
     while (SDL_PollEvent(&event))
         if (event.type == SDL_QUIT)
             destroyWindow(window);
+
+    window->keyboard = SDL_GetKeyboardState(NULL);
 }
 
 void clearWindow(float red, float green, float blue)

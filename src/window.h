@@ -10,6 +10,7 @@
 typedef struct {
   SDL_Window *pointer;
   SDL_GLContext context;
+  const unsigned char *keyboard;
   bool open;
 } Window;
 

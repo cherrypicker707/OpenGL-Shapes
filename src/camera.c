@@ -2,6 +2,7 @@
 #include "camera.h"
 #include "matrix.h"
 #include "shader.h"
+#include "vector.h"
 
 // Standard library headers
 #include <stdlib.h>
@@ -25,6 +26,7 @@ void updateCamera(Camera *camera)
 
 void rotateCamera(Camera *camera, Vector *rotation)
 {
+    scaleVector(rotation, -1.0f);
     Matrix *matrix = constructRotationMatrix(rotation);
 
     camera->transformation = matrixProduct(matrix, camera->transformation);
@@ -34,6 +36,7 @@ void rotateCamera(Camera *camera, Vector *rotation)
 
 void translateCamera(Camera *camera, Vector *translation)
 {
+    scaleVector(translation, -1.0f);
     Matrix *matrix = constructTranslationMatrix(translation);
 
     camera->transformation = matrixProduct(matrix, camera->transformation);

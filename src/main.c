@@ -7,6 +7,7 @@
 #include "window.h"
 
 // Standard library headers
+#include <SDL2/SDL_timer.h>
 #include <assert.h>
 #include <stdbool.h>
 
@@ -38,13 +39,31 @@ int main()
     setMatrixUniform(shader, "projection",
                      constructPerspectiveMatrix((float)WINDOW_HEIGHT / (float)WINDOW_WIDTH, 120.0f, 0.01f, 10.0f));
 
+    float t = (float)SDL_GetTicks() / 1000.0f;
+    float dt = 0.0f;
     while (isWindowOpen(window))
     {
         handleEvents(window);
 
+        if (window->keyboard[SDL_SCANCODE_W])
+            translateCamera(camera, constructVector(0.0f, 0.0f, dt * 1.0f));
+        if (window->keyboard[SDL_SCANCODE_S])
+            translateCamera(camera, constructVector(0.0f, 0.0f, dt * -1.0f));
+        if (window->keyboard[SDL_SCANCODE_A])
+            translateCamera(camera, constructVector(dt * -1.0f, 0.0f, 0.0f));
+        if (window->keyboard[SDL_SCANCODE_D])
+            translateCamera(camera, constructVector(dt * 1.0f, 0.0f, 0.0f));
+        if (window->keyboard[SDL_SCANCODE_Q])
+            rotateCamera(camera, constructVector(0.0f, dt * -1.0f, 0.0f));
+        if (window->keyboard[SDL_SCANCODE_E])
+            rotateCamera(camera, constructVector(0.0f, dt * 1.0f, 0.0f));
+
         clearWindow(0.0f, 0.0f, 0.0f);
         drawShape(cube);
         refreshWindow(window);
+
+        dt = ((float)SDL_GetTicks() / 1000.0f) - t;
+        t = ((float)SDL_GetTicks() / 1000.0f);
     }
 
     return 0;
