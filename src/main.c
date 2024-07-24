@@ -1,6 +1,7 @@
 // Project headers
 #include "camera.h"
 #include "matrix.h"
+#include "object.h"
 #include "shader.h"
 #include "shape.h"
 #include "vector.h"
@@ -31,11 +32,11 @@ int main()
 
     translateCamera(camera, constructVector(1.0f, 1.0f, -2.0f));
 
-    Shape *cube = constructCube();
+    Object *object = constructObject(constructCube(), shader);
+    scaleObject(object, constructVector(2.0f, 1.0f, 1.5f));
+    translateObject(object, constructVector(5.0f, 2.0f, 5.0f));
+    rotateObject(object, constructVector(1.0f, 1.0f, 1.0f));
 
-    setMatrixUniform(shader, "scaling", constructScalingMatrix(constructVector(0.5f, 0.5f, 0.5f)));
-    setMatrixUniform(shader, "rotation", constructRotationMatrix(constructVector(0.5f, 0.0f, 0.0f)));
-    setMatrixUniform(shader, "translation", constructTranslationMatrix(constructVector(0.0f, 0.0f, 5.0f)));
     setMatrixUniform(
         shader, "projection",
         constructPerspectiveMatrix((float)WINDOW_HEIGHT / (float)WINDOW_WIDTH, 120.0f, FLT_TRUE_MIN, 10.0f));
@@ -61,7 +62,7 @@ int main()
         updateCamera(camera);
 
         clearWindow(0.0f, 0.0f, 0.0f);
-        drawShape(cube);
+        drawObject(object);
         refreshWindow(window);
 
         dt = ((float)SDL_GetTicks() / 1000.0f) - t;

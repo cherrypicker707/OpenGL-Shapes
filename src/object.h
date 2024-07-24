@@ -2,18 +2,22 @@
 #define OBJECT_H
 
 #include "matrix.h"
+#include "shader.h"
 #include "shape.h"
 
-typedef struct {
-  Shape *shape;
-  Matrix *scaling;
-  Matrix *rotation;
-  Matrix *translation;
+typedef struct
+{
+    Shader *shader;
+    Shape *shape;
+    Matrix *scaling;
+    Matrix *rotation;
+    Matrix *translation;
 } Object;
 
-Object *constructObject(Shape *shape);
-Object *scaleObject(Shape *shape);
-Object *rotateObject(Shape *shape);
-Object *translateObject(Shape *shape);
+Object *constructObject(Shape *shape, Shader *shader);
+void scaleObject(Object *object, Vector *scaling);
+void rotateObject(Object *object, Vector *rotation);
+void translateObject(Object *object, Vector *translation);
+void drawObject(Object *object);
 
 #endif
