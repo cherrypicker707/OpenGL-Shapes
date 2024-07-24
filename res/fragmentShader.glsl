@@ -6,5 +6,5 @@ out vec4 color;
 
 void main()
 {
-    color = vec4(-transformedNormal.z, -transformedNormal.z, -transformedNormal.z, 1.0f);
+    color = vec4(0.5 - 0.5 * transformedNormal.z, 0.5 - 0.5 * transformedNormal.z, 0.5 - 0.5 * transformedNormal.z, 1.0f);
 }

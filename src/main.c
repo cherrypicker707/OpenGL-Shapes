@@ -7,8 +7,8 @@
 #include "window.h"
 
 // Standard library headers
-#include <SDL2/SDL_timer.h>
 #include <assert.h>
+#include <float.h>
 #include <stdbool.h>
 
 // Third party headers
@@ -36,8 +36,9 @@ int main()
     setMatrixUniform(shader, "scaling", constructScalingMatrix(constructVector(0.5f, 0.5f, 0.5f)));
     setMatrixUniform(shader, "rotation", constructRotationMatrix(constructVector(0.5f, 0.0f, 0.0f)));
     setMatrixUniform(shader, "translation", constructTranslationMatrix(constructVector(0.0f, 0.0f, 5.0f)));
-    setMatrixUniform(shader, "projection",
-                     constructPerspectiveMatrix((float)WINDOW_HEIGHT / (float)WINDOW_WIDTH, 120.0f, 0.01f, 10.0f));
+    setMatrixUniform(
+        shader, "projection",
+        constructPerspectiveMatrix((float)WINDOW_HEIGHT / (float)WINDOW_WIDTH, 120.0f, FLT_TRUE_MIN, 10.0f));
 
     float t = (float)SDL_GetTicks() / 1000.0f;
     float dt = 0.0f;
@@ -57,6 +58,7 @@ int main()
             rotateCamera(camera, constructVector(0.0f, dt * -1.0f, 0.0f));
         if (window->keyboard[SDL_SCANCODE_E])
             rotateCamera(camera, constructVector(0.0f, dt * 1.0f, 0.0f));
+        updateCamera(camera);
 
         clearWindow(0.0f, 0.0f, 0.0f);
         drawShape(cube);

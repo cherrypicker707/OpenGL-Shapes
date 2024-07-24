@@ -5,10 +5,13 @@
 #include "matrix.h"
 #include "shader.h"
 
-typedef struct {
-  Matrix *rotation;
-  Matrix *translation;
-  Shader *shader;
+typedef struct
+{
+    Matrix *position;
+    Matrix *normal;
+    Vector *rotation;
+    Vector *translation;
+    Shader *shader;
 } Camera;
 
 Camera *constructCamera(Shader *shader);

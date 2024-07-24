@@ -8,12 +8,14 @@ out vec4 transformedNormal;
 uniform mat4 scaling;
 uniform mat4 rotation;
 uniform mat4 translation;
-uniform mat4 cameraRotation;
-uniform mat4 cameraTranslation;
+uniform mat4 camera;
+uniform mat4 cameraNormal;
 uniform mat4 projection;
 
 void main()
 {
-    gl_Position = projection * cameraRotation * cameraTranslation * translation * rotation * scaling * vec4(position, 1.0f);
-    transformedNormal = cameraRotation * rotation * vec4(normal, 1.0f);
+    mat4 transform = translation * rotation * scaling;
+    gl_Position = projection * camera * transform * vec4(position, 1.0f);
+
+    transformedNormal = cameraNormal * rotation * vec4(normal, 1.0f);
 }
