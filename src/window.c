@@ -52,6 +52,11 @@ void handleEvents(Window *window)
     window->keyboard = SDL_GetKeyboardState(NULL);
 }
 
+bool isPressed(Window *window, unsigned short key)
+{
+    return window->keyboard[key];
+}
+
 void clearWindow(float red, float green, float blue)
 {
     glClearColor(red, green, blue, 1.0f);

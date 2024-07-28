@@ -47,17 +47,21 @@ int main()
     {
         handleEvents(window);
 
-        if (window->keyboard[SDL_SCANCODE_W])
-            translateCamera(camera, constructVector(0.0f, 0.0f, dt * 1.0f));
-        if (window->keyboard[SDL_SCANCODE_S])
-            translateCamera(camera, constructVector(0.0f, 0.0f, dt * -1.0f));
-        if (window->keyboard[SDL_SCANCODE_A])
+        if (isPressed(window, KEY_A))
             translateCamera(camera, constructVector(dt * -1.0f, 0.0f, 0.0f));
-        if (window->keyboard[SDL_SCANCODE_D])
+        if (isPressed(window, KEY_D))
             translateCamera(camera, constructVector(dt * 1.0f, 0.0f, 0.0f));
-        if (window->keyboard[SDL_SCANCODE_Q])
+        if (isPressed(window, KEY_LCTRL))
+            translateCamera(camera, constructVector(0.0f, dt * -1.0f, 0.0f));
+        if (isPressed(window, KEY_SPACE))
+            translateCamera(camera, constructVector(0.0f, dt * 1.0f, 0.0f));
+        if (isPressed(window, KEY_S))
+            translateCamera(camera, constructVector(0.0f, 0.0f, dt * -1.0f));
+        if (isPressed(window, KEY_W))
+            translateCamera(camera, constructVector(0.0f, 0.0f, dt * 1.0f));
+        if (isPressed(window, KEY_Q))
             rotateCamera(camera, constructVector(0.0f, dt * -1.0f, 0.0f));
-        if (window->keyboard[SDL_SCANCODE_E])
+        if (isPressed(window, KEY_E))
             rotateCamera(camera, constructVector(0.0f, dt * 1.0f, 0.0f));
         updateCamera(camera);
 
