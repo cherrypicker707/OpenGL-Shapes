@@ -36,6 +36,13 @@ int main()
     scaleObject(object, constructVector(2.0f, 1.0f, 1.5f));
     translateObject(object, constructVector(5.0f, 2.0f, 5.0f));
     rotateObject(object, constructVector(1.0f, 1.0f, 1.0f));
+    colorObject(object, constructVector(0.75f, 0.0f, 0.75f));
+
+    Object *another = constructObject(constructCube(), shader);
+    scaleObject(another, constructVector(0.5f, 1.0f, 2.0f));
+    translateObject(another, constructVector(-5.0f, 0.0f, 0.0f));
+    rotateObject(another, constructVector(-1.0f, 0.0f, 0.5f));
+    colorObject(another, constructVector(0.5f, 1.0f, 0.0f));
 
     setMatrixUniform(
         shader, "projection",
@@ -67,6 +74,7 @@ int main()
 
         clearWindow(0.0f, 0.0f, 0.0f);
         drawObject(object);
+        drawObject(another);
         refreshWindow(window);
 
         dt = ((float)SDL_GetTicks() / 1000.0f) - t;

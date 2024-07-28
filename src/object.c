@@ -13,6 +13,7 @@ Object *constructObject(Shape *shape, Shader *shader)
     object->scaling = constructScalingMatrix(constructVector(1.0f, 1.0f, 1.0f));
     object->rotation = constructRotationMatrix(constructVector(0.0f, 0.0f, 0.0f));
     object->translation = constructTranslationMatrix(constructVector(0.0f, 0.0f, 0.0f));
+    object->color = constructVector(1.0f, 1.0f, 1.0f);
 
     return object;
 }
@@ -32,10 +33,16 @@ void translateObject(Object *object, Vector *translation)
     object->translation = constructTranslationMatrix(translation);
 }
 
+void colorObject(Object *object, Vector *color)
+{
+    object->color = color;
+}
+
 void drawObject(Object *object)
 {
     setMatrixUniform(object->shader, "scaling", object->scaling);
     setMatrixUniform(object->shader, "rotation", object->rotation);
     setMatrixUniform(object->shader, "translation", object->translation);
+    setVectorUniform(object->shader, "objectColor", object->color);
     drawShape(object->shape);
 }
