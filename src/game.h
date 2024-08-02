@@ -20,8 +20,7 @@ typedef struct
     Shader *shader;
     Camera *camera;
     Shape *cube;
-    Object *object;
-    Object *another;
+    Object *object[5];
     Matrix *projection;
 } Game;
 

@@ -54,7 +54,8 @@ void translateObject(Object *object, Vector *translation)
 
 void colorObject(Object *object, Vector *color)
 {
-    object->color = color;
+    for (int i = 0; i < 3; i++)
+        object->color->component[i] = color->component[i];
 }
 
 void drawObject(Object *object)

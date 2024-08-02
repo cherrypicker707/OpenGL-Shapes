@@ -1,5 +1,19 @@
 #include "game.h"
+#include "object.h"
+#include "time.h"
+#include "vector.h"
 #include <SDL2/SDL.h>
+
+static float randomFloat(float maximum)
+{
+    return ((float)rand() / (float)RAND_MAX) * maximum;
+}
+
+static void randomVector(Vector *vector, float maximum)
+{
+    for (int i = 0; i < 3; i++)
+        vector->component[i] = randomFloat(maximum);
+}
 
 Game *constructGame()
 {
@@ -9,8 +23,8 @@ Game *constructGame()
     game->shader = constructShader(VERTEX_SHADER_PATH, FRAGMENT_SHADER_PATH);
     game->camera = constructCamera(game->shader);
     game->cube = constructCube();
-    game->object = constructObject(game->cube, game->shader);
-    game->another = constructObject(game->cube, game->shader);
+    for (int i = 0; i < 5; i++)
+        game->object[i] = constructObject(game->cube, game->shader);
     game->projection = constructPerspectiveMatrix(ASPECT, 120.0f, FLT_TRUE_MIN, 10.0f);
 
     useShader(game->shader);
@@ -19,15 +33,20 @@ Game *constructGame()
 
     translateCamera(game->camera, constructVector(1.0f, 1.0f, -2.0f));
 
-    scaleObject(game->object, constructVector(2.0f, 1.0f, 1.5f));
-    translateObject(game->object, constructVector(5.0f, 2.0f, 5.0f));
-    rotateObject(game->object, constructVector(1.0f, 1.0f, 1.0f));
-    colorObject(game->object, constructVector(0.75f, 0.0f, 0.75f));
-
-    scaleObject(game->another, constructVector(0.5f, 1.0f, 2.0f));
-    translateObject(game->another, constructVector(-5.0f, 0.0f, 0.0f));
-    rotateObject(game->another, constructVector(-1.0f, 0.0f, 0.5f));
-    colorObject(game->another, constructVector(0.5f, 1.0f, 0.0f));
+    srand(time(NULL));
+    for (int i = 0; i < 5; i++)
+    {
+        Vector *vector = constructVector(0.0f, 0.0f, 0.0f);
+        randomVector(vector, 2.0f);
+        scaleObject(game->object[i], vector);
+        randomVector(vector, 8.0f);
+        translateObject(game->object[i], vector);
+        randomVector(vector, 3.14f);
+        rotateObject(game->object[i], vector);
+        randomVector(vector, 1.0f);
+        colorObject(game->object[i], vector);
+        destroyVector(vector);
+    }
 
     return game;
 }
@@ -59,8 +78,8 @@ void runGame(Game *game)
         updateCamera(game->camera);
 
         clearWindow(0.0f, 0.0f, 0.0f);
-        drawObject(game->object);
-        drawObject(game->another);
+        for (int i = 0; i < 5; i++)
+            drawObject(game->object[i]);
         refreshWindow(game->window);
 
         dt = ((float)SDL_GetTicks() / 1000.0f) - t;
@@ -73,7 +92,7 @@ void destroyGame(Game *game)
     destroyShader(game->shader);
     destroyShape(game->cube);
     destroyCamera(game->camera);
-    destroyObject(game->object);
-    destroyObject(game->another);
+    for (int i = 0; i < 5; i++)
+        destroyObject(game->object[i]);
     destroyMatrix(game->projection);
 }
