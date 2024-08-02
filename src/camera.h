@@ -15,6 +15,7 @@ typedef struct
 } Camera;
 
 Camera *constructCamera(Shader *shader);
+void destroyCamera(Camera *camera);
 void updateCamera(Camera *camera);
 void rotateCamera(Camera *camera, Vector *rotation);
 void translateCamera(Camera *camera, Vector *translation);

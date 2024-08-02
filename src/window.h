@@ -19,11 +19,11 @@ typedef struct
 } Window;
 
 Window *constructWindow(const char *title, unsigned int width, unsigned int height);
+void destroyWindow(Window *window);
 bool isWindowOpen(Window *window);
 void handleEvents(Window *window);
 bool isPressed(Window *window, unsigned short key);
 void clearWindow(float red, float green, float blue);
 void refreshWindow(Window *window);
-void destroyWindow(Window *window);
 
 #endif

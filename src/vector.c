@@ -16,6 +16,14 @@ Vector *constructVector(float x, float y, float z)
     return vector;
 }
 
+void destroyVector(Vector *vector)
+{
+    free(vector->component);
+    vector->component = NULL;
+
+    free(vector);
+}
+
 void scaleVector(Vector *vector, float scalar)
 {
     for (int i = 0; i < 3; i++)

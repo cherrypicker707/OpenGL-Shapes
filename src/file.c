@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-const char *getFileContent(const char *path)
+char *getFileContent(const char *path)
 {
     FILE *file = fopen(path, "r");
     assert(file);

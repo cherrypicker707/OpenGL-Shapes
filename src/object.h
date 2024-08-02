@@ -16,6 +16,7 @@ typedef struct
 } Object;
 
 Object *constructObject(Shape *shape, Shader *shader);
+void destroyObject(Object *object);
 void scaleObject(Object *object, Vector *scaling);
 void rotateObject(Object *object, Vector *rotation);
 void translateObject(Object *object, Vector *translation);

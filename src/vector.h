@@ -7,6 +7,7 @@ typedef struct
 } Vector;
 
 Vector *constructVector(float x, float y, float z);
+void destroyVector(Vector *vector);
 void scaleVector(Vector *vector, float scalar);
 void addVector(Vector *vector, Vector *other);
 

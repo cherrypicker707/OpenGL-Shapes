@@ -15,6 +15,14 @@ Matrix *constructMatrix()
     return matrix;
 }
 
+void destroyMatrix(Matrix *matrix)
+{
+    free(matrix->entry);
+    matrix->entry = NULL;
+
+    free(matrix);
+}
+
 Matrix *constructIdentityMatrix()
 {
     Matrix *matrix = constructMatrix();
@@ -54,6 +62,12 @@ Matrix *constructRotationMatrix(Vector *rotation)
 
     for (int i = 0; i < 3; i++)
         matrix = matrixProduct(matrix, factor[i]);
+
+    for (int i = 0; i < 3; i++)
+    {
+        destroyMatrix(factor[i]);
+        factor[i] = NULL;
+    }
 
     return matrix;
 }

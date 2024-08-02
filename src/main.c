@@ -32,7 +32,9 @@ int main()
 
     translateCamera(camera, constructVector(1.0f, 1.0f, -2.0f));
 
-    Object *object = constructObject(constructCube(), shader);
+    Shape *cube = constructCube();
+
+    Object *object = constructObject(cube, shader);
     scaleObject(object, constructVector(2.0f, 1.0f, 1.5f));
     translateObject(object, constructVector(5.0f, 2.0f, 5.0f));
     rotateObject(object, constructVector(1.0f, 1.0f, 1.0f));
@@ -80,6 +82,12 @@ int main()
         dt = ((float)SDL_GetTicks() / 1000.0f) - t;
         t = ((float)SDL_GetTicks() / 1000.0f);
     }
+
+    destroyShader(shader);
+    destroyShape(cube);
+    destroyCamera(camera);
+    destroyObject(object);
+    destroyObject(another);
 
     return 0;
 }

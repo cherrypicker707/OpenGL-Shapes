@@ -68,6 +68,15 @@ Shape *constructCube()
     return cube;
 }
 
+void destroyShape(Shape *shape)
+{
+    glDeleteVertexArrays(1, &shape->vertexArrayObject);
+    glDeleteBuffers(1, &shape->vertexBufferObject);
+    glDeleteBuffers(1, &shape->elementBufferObject);
+
+    free(shape);
+}
+
 void drawShape(Shape *shape)
 {
     glBindVertexArray(shape->vertexArrayObject);

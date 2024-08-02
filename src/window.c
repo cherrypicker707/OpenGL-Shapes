@@ -37,6 +37,23 @@ Window *constructWindow(const char *title, unsigned int width, unsigned int heig
     return window;
 }
 
+void destroyWindow(Window *window)
+{
+    SDL_DestroyWindow(window->pointer);
+    window->pointer = NULL;
+
+    SDL_GL_DeleteContext(window->context);
+    window->context = NULL;
+
+    window->keyboard = NULL;
+
+    window->open = false;
+
+    free(window);
+
+    SDL_Quit();
+}
+
 bool isWindowOpen(Window *window)
 {
     return window->open;
@@ -66,13 +83,4 @@ void clearWindow(float red, float green, float blue)
 void refreshWindow(Window *window)
 {
     SDL_GL_SwapWindow(window->pointer);
-}
-
-void destroyWindow(Window *window)
-{
-    window->open = false;
-
-    SDL_GL_DeleteContext(window->context);
-    SDL_DestroyWindow(window->pointer);
-    SDL_Quit();
 }

@@ -4,17 +4,18 @@
 // Project headers
 #include "vector.h"
 
-typedef struct {
-  float *entry;
+typedef struct
+{
+    float *entry;
 } Matrix;
 
 Matrix *constructMatrix();
+void destroyMatrix(Matrix *matrix);
 Matrix *constructIdentityMatrix();
 Matrix *constructScalingMatrix(Vector *scaling);
 Matrix *constructRotationMatrix(Vector *rotation);
 Matrix *constructTranslationMatrix(Vector *translation);
-Matrix *constructPerspectiveMatrix(float aspect, float fieldOfView, float near,
-                                   float far);
+Matrix *constructPerspectiveMatrix(float aspect, float fieldOfView, float near, float far);
 Matrix *matrixProduct(Matrix *left, Matrix *right);
 
 #endif

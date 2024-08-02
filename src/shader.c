@@ -14,8 +14,10 @@ static unsigned int compileShader(const char *path, unsigned int type)
 {
     unsigned int shader = glCreateShader(type);
 
-    const char *source = getFileContent(path);
-    glShaderSource(shader, 1, &source, NULL);
+    char *source = getFileContent(path);
+    glShaderSource(shader, 1, (const char **)&source, NULL);
+    free(source);
+    source = NULL;
 
     glCompileShader(shader);
 
@@ -40,6 +42,9 @@ static unsigned int linkProgram(unsigned int vertexShader, unsigned int fragment
 
     glLinkProgram(program);
 
+    glDeleteShader(vertexShader);
+    glDeleteShader(fragmentShader);
+
     int status;
     glGetProgramiv(program, GL_LINK_STATUS, &status);
     if (!status)
@@ -63,6 +68,11 @@ Shader *constructShader(const char *vertexShaderPath, const char *fragmentShader
     shader->program = program;
 
     return shader;
+}
+
+void destroyShader(Shader *shader)
+{
+    glDeleteProgram(shader->program);
 }
 
 void useShader(Shader *shader)

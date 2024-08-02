@@ -18,6 +18,25 @@ Object *constructObject(Shape *shape, Shader *shader)
     return object;
 }
 
+void destroyObject(Object *object)
+{
+    object->shader = NULL;
+
+    object->shape = NULL;
+
+    destroyMatrix(object->scaling);
+    object->scaling = NULL;
+
+    destroyMatrix(object->rotation);
+    object->rotation = NULL;
+
+    destroyMatrix(object->translation);
+    object->translation = NULL;
+
+    destroyVector(object->color);
+    object->color = NULL;
+}
+
 void scaleObject(Object *object, Vector *scaling)
 {
     object->scaling = constructScalingMatrix(scaling);

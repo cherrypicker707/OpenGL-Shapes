@@ -22,13 +22,38 @@ Camera *constructCamera(Shader *shader)
     return camera;
 }
 
+void destroyCamera(Camera *camera)
+{
+    destroyMatrix(camera->position);
+    camera->position = NULL;
+
+    destroyMatrix(camera->normal);
+    camera->normal = NULL;
+
+    destroyVector(camera->rotation);
+    camera->rotation = NULL;
+
+    destroyVector(camera->translation);
+    camera->translation = NULL;
+
+    camera->shader = NULL;
+
+    free(camera);
+}
+
 void updateCamera(Camera *camera)
 {
-    camera->position = matrixProduct(constructRotationMatrix(camera->rotation), camera->position);
-    camera->normal = matrixProduct(constructRotationMatrix(camera->rotation), camera->normal);
+    Matrix *rotationMatrix = constructRotationMatrix(camera->rotation);
+    camera->position = matrixProduct(rotationMatrix, camera->position);
+    camera->normal = matrixProduct(rotationMatrix, camera->normal);
+    destroyMatrix(rotationMatrix);
+    rotationMatrix = NULL;
     camera->rotation = constructVector(0.0f, 0.0f, 0.0f);
 
-    camera->position = matrixProduct(constructTranslationMatrix(camera->translation), camera->position);
+    Matrix *translationMatrix = constructTranslationMatrix(camera->translation);
+    camera->position = matrixProduct(translationMatrix, camera->position);
+    destroyMatrix(translationMatrix);
+    translationMatrix = NULL;
     camera->translation = constructVector(0.0f, 0.0f, 0.0f);
 
     setMatrixUniform(camera->shader, "camera", camera->position);
