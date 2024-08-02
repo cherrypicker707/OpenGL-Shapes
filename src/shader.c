@@ -82,10 +82,12 @@ void useShader(Shader *shader)
 
 void setVectorUniform(Shader *shader, const char *name, Vector *vector)
 {
+    useShader(shader);
     glUniform3fv(glGetUniformLocation(shader->program, name), 1, vector->component);
 }
 
 void setMatrixUniform(Shader *shader, const char *name, Matrix *matrix)
 {
+    useShader(shader);
     glUniformMatrix4fv(glGetUniformLocation(shader->program, name), 1, GL_FALSE, matrix->entry);
 }
